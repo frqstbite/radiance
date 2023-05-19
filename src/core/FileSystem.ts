@@ -7,7 +7,7 @@ type NodeId = string;
 
 
 /**
- * @template {Node} T
+ * @template {Node<any>} T
  * `Entry` objects represent a `Node`'s data in the `FileSystem`.
  * Each `Entry` is tied to one `Node`, but any `Node` may be tied to several `Entry`s.
  */
@@ -15,33 +15,15 @@ class Entry<T extends Node<any>> {
     filesystem: FileSystem;
     id: EntryId;
     name: string;
-    node: NodeId;
-    parent?: NodeId;
+    node: T;
+    parent?: Directory;
 
     constructor(filesystem: FileSystem, name: string, node: T, parent?: Directory) {
         this.filesystem = filesystem;
         this.id = v1();
         this.name = name;
-        this.node = node.id;
-        this.parent = parent?.id;
-    }
-
-    /** 
-     * @return {T} - The `Node` this `Entry` represents.
-     */
-    getNode(): T {
-        return this.filesystem.getNode(this.node);
-    }
-
-    /** 
-     * @return {Directory} - The `Directory` that contains this `Entry`, if any.
-     */
-    getParent(): Directory | undefined {
-        if (!this.parent) {
-            return undefined;
-        }
-        
-        return this.filesystem.getNode(this.parent);
+        this.node = node;
+        this.parent = parent;
     }
 }
 
@@ -97,7 +79,7 @@ abstract class Node<T> {
 }
 
 /** A `Node` that contains `Entry`s. */
-abstract class Directory extends Node<{ [index: string]: EntryId }> {
+class Directory extends Node<{ [index: string]: Entry<any> }> {
     constructor(filesystem: FileSystem, entries?: Entry<any>[]) {
         super(filesystem, {});
 
@@ -119,8 +101,8 @@ abstract class Directory extends Node<{ [index: string]: EntryId }> {
             throw new Error(`Directory ${this.id} already contains Entry with name ${entry.name}`);
         }
 
-        this.data[entry.name] = entry.id;
-        entry.parent = this.id;
+        this.data[entry.name] = entry;
+        entry.parent = this;
     }
 
     /** 
@@ -129,15 +111,15 @@ abstract class Directory extends Node<{ [index: string]: EntryId }> {
      * @param {string} name - The name of the `Entry` to remove.
      * @return {Entry} - The removed `Entry`, returned for convenience.
      */
-    removeEntry(name: EntryId): Entry<any> {
-        const entry = this.entries[name];
+    removeEntry(name: string): Entry<any> {
+        const entry = this.data[name];
 
         // Throw if the Entry doesn't exist
         if (!entry) {
-            throw new Error(`Invalid attempt to remove Entry ${id} from FileSystem ${this.name}`);
+            throw new Error(`Invalid attempt to remove Entry with name ${name} from Directory ${this.id}`);
         }
         
-        delete this.entries[name];
+        delete this.data[name];
         return entry;
     }
     
@@ -147,12 +129,12 @@ abstract class Directory extends Node<{ [index: string]: EntryId }> {
      * @param {string} name - The name of the `Entry` to retrieve.
      * @return {Entry?} - The `Entry` with the given name.
      */
-    getEntry(name: string): Entry {
-        const entry = this.entries[name];
+    getEntry(name: string): Entry<any> {
+        const entry = this.data[name];
 
         // Throw if the Entry doesn't exist
         if (!entry) {
-            throw new Error(`Invalid attempt to retrieve Entry ${id} from FileSystem ${this.name}`);
+            throw new Error(`Invalid attempt to retrieve Entry with name ${name} from Directory ${this.id}`);
         }
         
         return entry;
@@ -161,9 +143,8 @@ abstract class Directory extends Node<{ [index: string]: EntryId }> {
     /** 
      * @returns {Entry[]} - An array of all `Entry`s within this `Directory`.
      */
-    getEntries(): Entry[] {
-        return Object.values(this.entries) //Node ids
-            .map(id => this.getNode(id)!); //Mapped to Node objects with FileSystem.getNode
+    getEntries(): Entry<any>[] {
+        return Object.values(this.data);
     }
 }
 
@@ -174,30 +155,30 @@ class ExternDirectory extends Directory {
     constructor(filesystem: FileSystem, target: FileSystem) {
         super(filesystem);
         this.target = target;
-        //this.data = target.getRoot().getNode().data;
+        //this.data = target.root.node.data;
     }
 
     // Reroute to target file system's root directory
-    addEntry(entry: Entry): void {
-        this.target.getRoot().getNode().addEntry(entry);
+    addEntry(entry: Entry<any>): void {
+        this.target.root!.node.addEntry(entry);
     }
 
-    removeEntry(name: string): Entry {
-        this.target.getRoot().getNode().removeEntry(name);
+    removeEntry(name: string): Entry<any> {
+        return this.target.root!.node.removeEntry(name);
     }
 
-    getEntry(name: string): Entry {
-        return this.target.getRoot().getNode().getEntry(name);
+    getEntry(name: string): Entry<any> {
+        return this.target.root!.node.getEntry(name);
     }
 
-    getEntries(): Entry[] {
-        return this.target.getRoot().getNode().getEntries();
+    getEntries(): Entry<any>[] {
+        return this.target.root!.node.getEntries();
     }
 }
 
 /** `File` objects represent ordinary data-containing files in the `FileSystem`. */
 class File extends Node<Uint8Array> {
-    constructor(filesystem: FileSystem, data?: Uint8Array) {
+    constructor(filesystem: FileSystem, data: Uint8Array) {
         super(filesystem, data);
     }
 }
@@ -206,9 +187,9 @@ class File extends Node<Uint8Array> {
 /** `FileSystem` objects track and hold a single file structure composed of `Node`s and `Entry`s. */
 class FileSystem {
     name: string; //String name of the file system; used mostly for debugging purposes
-    nodes: { [index: NodeId]: Node }; //All data nodes in the file system
-    entries: { [index: EntryId]: Entry }; //All entries in the file system
-    root?: EntryId; //Id of the entry for the root directory of the file system
+    nodes: { [index: NodeId]: Node<any> }; //All data nodes in the file system
+    entries: { [index: EntryId]: Entry<any> }; //All entries in the file system
+    root?: Entry<Directory>; //The entry for the root directory of the file system
     
     constructor(name: string) {
         this.name = name;
@@ -222,7 +203,7 @@ class FileSystem {
      * 
      * @param {Node} node - The `Node` to add.
      */
-    addNode(node: Node): void {
+    addNode(node: Node<any>): void {
         this.nodes[node.id] = node;
     }
 
@@ -232,7 +213,7 @@ class FileSystem {
      * @param {NodeId} id - Id of the `Node` to remove.
      * @return {Node} - The removed `Node`, returned for convenience.
      */
-    removeNode(id: NodeId): Node | undefined {
+    removeNode(id: NodeId): Node<any> {
         const node = this.nodes[id];
 
         // Throw if the Node doesn't exist
@@ -250,7 +231,7 @@ class FileSystem {
      * @param {NodeId} id - Id of the `Node` to get.
      * @return {Node} `Node` with the id.
      */
-    getNode(id: NodeId): Node | undefined {
+    getNode(id: NodeId): Node<any> {
         const node = this.nodes[id];
 
         // Throw if the Node doesn't exist
@@ -274,9 +255,9 @@ class FileSystem {
      *
      * @param {Entry} entry - The `Entry` to add.
      */
-    addEntry(entry: Entry): void {
+    addEntry(entry: Entry<any>): void {
         this.entries[entry.id] = entry;
-        entry.getNode().entryAdded(entry);
+        entry.node.entryAdded(entry);
     }
 
     /** 
@@ -285,16 +266,17 @@ class FileSystem {
      * @param {EntryId} id - Id of the `Entry` to remove.
      * @return {Entry} - The removed `Entry`. Returned for convenience. 
      */
-    removeEntry(id: EntryId): Entry {
+    removeEntry(id: EntryId): Entry<any> {
         const entry = this.entries[id];
 
         // Throw if the Entry doesn't exist
         if (!entry) {
             throw new Error(`Invalid attempt to remove Entry ${id} from FileSystem ${this.name}`);
         }
-        
+
+        entry.parent?.removeEntry(entry.name);
         delete this.entries[id];
-        entry.getNode().entryRemoved(entry);
+        entry.node.entryRemoved(entry);
         return entry;
     }
 
@@ -304,7 +286,7 @@ class FileSystem {
      * @param {EntryId} id - Id of the `Entry` to get.
      * @return {Entry} `Entry` with the id, or undefined if it doesn't exist.
      */
-    getEntry(id: EntryId): Entry {
+    getEntry(id: EntryId): Entry<any> {
         const entry = this.entries[id];
 
         // Throw if the Entry doesn't exist
@@ -318,24 +300,12 @@ class FileSystem {
     /** 
      * @return {Entry[]} - All `Entry`s in this `FileSystem`.
      */
-    getEntries(): Entry[] {
+    getEntries(): Entry<any>[] {
         return Object.values(this.entries);
-    }
-
-
-    /** 
-     * @return {Entry} - The `Entry` representing the root directory of this `FileSystem`.
-     */
-    getRoot(): Entry<Directory> | undefined {
-        if (!this.root) {
-            return undefined;
-        }
-        
-        return this.getEntry(this.root);
     }
 }
 
 
 export {
-    
+    FileSystem
 };
