@@ -47,7 +47,6 @@ abstract class Manager {
 
 /** `Kernel` objects represent a running Radiant kernel and its various services. */
 class Kernel {
-    public manager: Proxy<Manager>;
     protected managers: { [index: string]: Manager };
     public running: boolean = false;
     
@@ -58,13 +57,6 @@ class Kernel {
         for (const manager of managers) {
             this.registerManager(manager);
         }
-        
-        // Create helpful manager proxy
-        this.manager = new Proxy({}, {
-            get: (target, property, receiver) => {
-                return this.getManager(property);
-            },
-        });
     }
 
     /** 
