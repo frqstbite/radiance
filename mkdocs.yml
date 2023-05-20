@@ -1,4 +1,4 @@
-site_name: Radiant
+site_name: RADIANTOS
 site_description: RadiantOS is a unix-inspired pseudo-operating system built on web technology.
 site_url: https://frqstbite.github.io/radiantos
 repo_name: frqstbite/radiantos
@@ -9,6 +9,8 @@ extra_css:
 
 theme:
   name: material
+  logo: assets/images/logo.png
+  favicon: assets/images/logo-dark.svg
   palette:
     - media: '(prefers-color-scheme: dark)'
       scheme: slate
@@ -22,6 +24,16 @@ theme:
         name: '➔ DARK'
   icon:
     repo: octicons/mark-github-16
+
+nav:
+  - Home: index.md
+  - Tutorials:
+    - Home: tutorials/index.md
+    - First Program:
+      - Introduction: tutorials/first-program/index.md
+      - Project Setup: tutorials/first-program/setup.md
+  - API:
+    - Home: api/index.md
 
 markdown_extensions:
   - admonition
