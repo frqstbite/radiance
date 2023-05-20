@@ -1,39 +1,55 @@
-site_name: RADIANTOS
+site_name: RadiantOS
 site_description: RadiantOS is a unix-inspired pseudo-operating system built on web technology.
 site_url: https://frqstbite.github.io/radiantos
 repo_name: frqstbite/radiantos
 repo_url: https://github.com/frqstbite/radiantos
 
 extra_css:
-  - assets/stylesheets/extra.css
+  - assets/stylesheets/theme/theme.css
 
 theme:
   name: material
-  logo: assets/images/logo.png
+  custom_dir: docs/assets/overrides
+  logo: assets/images/logo-dark.svg
   favicon: assets/images/logo-dark.svg
   palette:
     - media: '(prefers-color-scheme: dark)'
-      scheme: slate
+      scheme: radiant-dark
       toggle:
         icon: octicons/sun-24
         name: '➔ LIGHT'
     - media: '(prefers-color-scheme: light)'
-      scheme: default
+      scheme: radiant-light
       toggle:
         icon: octicons/moon-24 
         name: '➔ DARK'
+  features:
+    - navigation.tabs
+    - navigation.top
+    - navigation.sections
+    - navigation.instant
+    - navigation.indexes
+    - search.suggest
+    - search.highlight
   icon:
     repo: octicons/mark-github-16
 
 nav:
   - Home: index.md
-  - Tutorials:
-    - Home: tutorials/index.md
-    - First Program:
-      - Introduction: tutorials/first-program/index.md
-      - Project Setup: tutorials/first-program/setup.md
-  - API:
-    - Home: api/index.md
+  - Guides:
+    - guides/index.md
+    - Creating An Application:
+      - Introduction: guides/application/index.md
+      - Project Setup: guides/application/setup.md
+    - Creating A Kernel Module:
+      - Introduction: guides/module/index.md
+      - Project Setup: guides/module/setup.md
+  - API Reference:
+    - Home: api-reference/index.md
+    - Application API:
+      - files Module: api-reference/application/files.md
+    - Kernel API:
+      - filesystem Module: api-reference/kernel/files.md
 
 markdown_extensions:
   - admonition

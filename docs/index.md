@@ -1,7 +1,7 @@
 ---
-hide:
-  - toc
-  - nav
+  hide:
+    - toc
+    - navigation
 ---
 # Welcome to MkDocs
 
