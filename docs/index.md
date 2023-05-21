@@ -1,11 +1,15 @@
 ---
+  title: "Home"
+  template: home.html
   hide:
     - toc
     - navigation
 ---
-# Welcome to MkDocs
+# Radiant
 
-For full documentation visit [mkdocs.org](https://www.mkdocs.org).
+!!! info "TODO"
+
+    document radiant lol
 
 ## Commands
 
