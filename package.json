@@ -3,8 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "docs:setup": "pip install mkdocs mkdocs-material pillow cairosvg",
     "docs:serve": "mkdocs serve",
     "docs:build": "mkdocs build",
+    "docs:deploy": "mkdocs gh-deploy",
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build"
   },
