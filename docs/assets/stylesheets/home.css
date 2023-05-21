@@ -1,0 +1,29 @@
+:root {
+    --gutter-width: 30px;
+}
+
+@media (min-width: 1024px) {
+    /* Gutters */
+    .gutter {
+        position: relative;
+        overflow: hidden;
+        min-width: var(--gutter-width);
+        max-width: 2rem;
+        min-height: 100%;
+    }
+
+    .gutter .details {
+        position: absolute;
+        width: var(--gutter-width);
+        height: 100%;
+        background-repeat: repeat-y;
+    }
+    
+    .gutter.left .details {
+        background-image: url('../../assets/images/details/gutter1.png');
+    }
+
+    .gutter.right .details {
+        background-image: url('../../assets/images/details/gutter2.png');
+    }
+}
