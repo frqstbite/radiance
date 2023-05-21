@@ -1,110 +1,88 @@
-:root {
-	--fusiondoc-grey-0: hsl(240, 5%, 2.5%);
-	--fusiondoc-grey-1: hsl(240, 5%, 5%);
-	--fusiondoc-grey-2: hsl(240, 5%, 10%);
-	--fusiondoc-grey-3: hsl(240, 5%, 20%);
-	--fusiondoc-grey-4: hsl(240, 5%, 30%);
-	--fusiondoc-grey-5: hsl(240, 5%, 50%);
-	--fusiondoc-grey-6: hsl(240, 5%, 60%);
-	--fusiondoc-grey-7: hsl(240, 5%, 80%);
-	--fusiondoc-grey-8: hsl(240, 5%, 90%);
-	--fusiondoc-grey-9: hsl(240, 5%, 92%);
-	--fusiondoc-grey-10: hsl(240, 5%, 95%);
+/* Main Colors */
+* {
+    --md-default-fg-color:               hsl(var(--radiant-fg-1));
+	--md-default-fg-color--light:        hsl(var(--radiant-fg-2));
+	--md-default-fg-color--lighter:      hsl(var(--radiant-fg-3));
+	--md-default-fg-color--lightest:     hsl(var(--radiant-fg-3));
+	--md-default-bg-color:               hsl(var(--radiant-bg-1a));
+	--md-default-bg-color--light:        hsl(var(--radiant-bg-2a));
+	--md-default-bg-color--lighter:      hsl(var(--radiant-bg-3a));
+	--md-default-bg-color--lightest:     hsl(var(--radiant-bg-3a));
 
-	--fusiondoc-grey-1-a80: hsl(240, 5%, 5%, 80%);
-	--fusiondoc-grey-2-a80: hsl(240, 5%, 10%, 80%);
-	--fusiondoc-grey-8-a80: hsl(240, 5%, 90%, 80%);
+	--md-primary-fg-color:               hsl(var(--radiant-accent));
+	--md-primary-fg-color--light:        hsl(var(--radiant-accent-light));
+	--md-primary-fg-color--dark:         hsl(var(--radiant-accent-dark));
 
-	--fusiondoc-orange: hsl(40, 100%, 50%);
-	--fusiondoc-orange-p1: hsl(40, 100%, 60%);
-	--fusiondoc-orange-p2: hsl(40, 100%, 80%);
-	--fusiondoc-orange-n1: hsl(40, 100%, 40%);
-	--fusiondoc-orange-n2: hsl(40, 100%, 20%);
-	--fusiondoc-orange-a10: hsla(40, 100%, 50%, 10%);
-	--fusiondoc-orange-a20: hsla(40, 100%, 50%, 20%);
-	--fusiondoc-orange-a50: hsla(40, 100%, 50%, 50%);
+	--md-accent-fg-color:                hsl(var(--radiant-accent-hover));
+	--md-accent-fg-color--transparent:   hsla(var(--radiant-accent-hover), 0.1);
 
-	--fusiondoc-magenta: hsl(320, 100%, 50%);
-	--fusiondoc-magenta-p1: hsl(320, 100%, 60%);
-	--fusiondoc-magenta-p2: hsl(320, 100%, 80%);
-	--fusiondoc-magenta-n1: hsl(320, 100%, 40%);
-	--fusiondoc-magenta-n2: hsl(320, 100%, 20%);
-	--fusiondoc-magenta-a10: hsl(320, 100%, 50%, 10%);
-	--fusiondoc-magenta-a20: hsl(320, 100%, 50%, 20%);
-	--fusiondoc-magenta-a50: hsl(320, 100%, 50%, 50%);
+	--md-typeset-color:                var(--md-default-fg-color);
+	--md-typeset-a-color:              var(--md-primary-fg-color);
+	--md-typeset-mark-color:           hsl(var(--radiant-accent), 0.5);
+	--md-typeset-del-color:            hsla(6, 90%, 60%, 0.15);
+	--md-typeset-ins-color:            hsla(150, 90%, 44%, 0.15);
+	--md-typeset-kbd-color:            hsla(0, 0%, 98%, 1);
+	--md-typeset-kbd-accent-color:     hsla(0, 100%, 100%, 1);
+	--md-typeset-kbd-border-color:     hsla(0, 0%, 72%, 1);
+	--md-typeset-table-color:          hsla(0, 0%, 0%, 0.12);
 
-	--fusiondoc-grey: hsl(240, 5%, 60%);
-	--fusiondoc-grey-p1: hsl(240, 5%, 70%);
-	--fusiondoc-grey-p2: hsl(240, 5%, 80%);
-	--fusiondoc-grey-n1: hsl(240, 5%, 40%);
-	--fusiondoc-grey-n2: hsl(240, 5%, 20%);
-	--fusiondoc-grey-a10: hsl(240, 5%, 60%, 10%);
-	--fusiondoc-grey-a20: hsl(240, 5%, 60%, 20%);
-	--fusiondoc-grey-a50: hsl(240, 5%, 60%, 50%);
+	--md-admonition-fg-color:          hsl(var(--radiant-fg-1));
+	--md-admonition-bg-color:          hsl(var(--radiant-bg-2b));
+
+	--md-footer-fg-color:              hsl(var(--radiant-fg-2));
+	--md-footer-fg-color--light:       hsl(var(--radiant-fg-2));
+	--md-footer-fg-color--lighter:     hsl(var(--radiant-fg-2));
+	--md-footer-bg-color:              hsl(var(--radiant-bg-2a));
+	--md-footer-bg-color--dark:        hsl(var(--radiant-bg-1a));
+
+	--md-text-font: var(--radiant-font-text);
 }
 
+/* Code */
 [data-md-color-scheme="radiant-light"] {
-    --fusiondoc-bg-1: var(--fusiondoc-grey-8);
-	--fusiondoc-bg-1-a80: var(--fusiondoc-grey-8-a80);
-	--fusiondoc-bg-2: var(--fusiondoc-grey-9);
-	--fusiondoc-bg-3: var(--fusiondoc-grey-10);
+	--md-code-fg-color:                hsl(var(--radiant-fg-2));
+	--md-code-bg-color:                hsl(var(--radiant-bg-2a));
 
-	--fusiondoc-fg-1: var(--fusiondoc-grey-2);
-	--fusiondoc-fg-2: var(--fusiondoc-grey-3);
-	--fusiondoc-fg-3: var(--fusiondoc-grey-4);
-
-	--fusiondoc-accent: var(--fusiondoc-orange-n1);
-	--fusiondoc-accent-light: var(--fusiondoc-orange-p2);
-	--fusiondoc-accent-dark: var(--fusiondoc-orange-n2);
-	--fusiondoc-accent-text: var(--fusiondoc-orange-n2);
-	--fusiondoc-accent-a10: var(--fusiondoc-orange-a10);
-	--fusiondoc-accent-a20: var(--fusiondoc-orange-a20);
-
-	--fusiondoc-accent-hover: var(--fusiondoc-grey);
-	--fusiondoc-accent-hover-text: var(--fusiondoc-grey-n2);
-	--fusiondoc-accent-hover-a10: var(--fusiondoc-grey-a10);
-	--fusiondoc-accent-hover-a20: var(--fusiondoc-grey-a20);
-
-	--fusiondoc-stroke: hsla(240, 5%, 0%, 15%);
-	--fusiondoc-smoke: hsla(240, 5%, 85%, 90%);
+	--md-code-hl-color:                hsla(var(--radiant-accent), 0.2);
+	--md-code-hl-number-color:         hsl(290, 60%, 70%);
+	--md-code-hl-special-color:        var(--fusiondoc-grey-7);
+	--md-code-hl-function-color:       var(--fusiondoc-grey-7);
+	--md-code-hl-constant-color:       var(--fusiondoc-grey-7);
+	--md-code-hl-keyword-color:        hsl(40, 75%, 60%);
+	--md-code-hl-string-color:         hsl(330, 80%, 70%);
+	--md-code-hl-name-color:           var(--fusiondoc-grey-8);
+	--md-code-hl-operator-color:       var(--fusiondoc-grey-6);
+	--md-code-hl-punctuation-color:    var(--fusiondoc-grey-6);
+	--md-code-hl-comment-color:        var(--fusiondoc-grey-6);
+	--md-code-hl-generic-color:        var(--fusiondoc-grey-6);
+	--md-code-hl-variable-color:       var(--fusiondoc-grey-6);
 }
 
 [data-md-color-scheme="radiant-dark"] {
-    --fusiondoc-bg-1: var(--fusiondoc-grey-2);
-	--fusiondoc-bg-1-a80: var(--fusiondoc-grey-2-a80);
-	--fusiondoc-bg-2: var(--fusiondoc-grey-3);
-	--fusiondoc-bg-3: var(--fusiondoc-grey-4);
+	--md-code-fg-color:                hsl(var(--radiant-fg-1));
+	--md-code-bg-color:                hsl(var(--radiant-bg-1b));
 
-	--fusiondoc-fg-1: var(--fusiondoc-grey-9);
-	--fusiondoc-fg-2: var(--fusiondoc-grey-8);
-	--fusiondoc-fg-3: var(--fusiondoc-grey-7);
-
-	--fusiondoc-accent: var(--fusiondoc-orange);
-	--fusiondoc-accent-light: var(--fusiondoc-orange-p2);
-	--fusiondoc-accent-dark: var(--fusiondoc-orange-n2);
-	--fusiondoc-accent-text: var(--fusiondoc-orange-p1);
-	--fusiondoc-accent-a10: var(--fusiondoc-orange-a10);
-	--fusiondoc-accent-a20: var(--fusiondoc-orange-a20);
-
-	--fusiondoc-accent-hover: var(--fusiondoc-grey);
-	--fusiondoc-accent-hover-text: var(--fusiondoc-grey-p1);
-	--fusiondoc-accent-hover-a10: var(--fusiondoc-grey-a10);
-	--fusiondoc-accent-hover-a20: var(--fusiondoc-grey-a20);
-
-	--fusiondoc-stroke: hsla(240, 5%, 100%, 15%);
-	--fusiondoc-smoke: hsla(240, 5%, 0%, 90%);
+	--md-code-hl-color:                var(--fusiondoc-accent-a20);
+	--md-code-hl-number-color:         hsl(290, 60%, 70%);
+	--md-code-hl-special-color:        var(--fusiondoc-grey-7);
+	--md-code-hl-function-color:       var(--fusiondoc-grey-7);
+	--md-code-hl-constant-color:       var(--fusiondoc-grey-7);
+	--md-code-hl-keyword-color:        hsl(40, 75%, 60%);
+	--md-code-hl-string-color:         hsl(330, 80%, 70%);
+	--md-code-hl-name-color:           var(--fusiondoc-grey-8);
+	--md-code-hl-operator-color:       var(--fusiondoc-grey-6);
+	--md-code-hl-punctuation-color:    var(--fusiondoc-grey-6);
+	--md-code-hl-comment-color:        hsl(var(--radiant-fg-3));
+	--md-code-hl-generic-color:        var(--fusiondoc-grey-6);
+	--md-code-hl-variable-color:       var(--fusiondoc-grey-6);
 }
 
-
-/* Clever mechanism for hiding elements */
-[data-md-color-scheme="radiant-light"] .dark-theme-only,
-[data-md-color-scheme="radiant-dark"] .light-theme-only,
-[data-md-color-scheme="radiant-light"] img[src$="#only-dark"],
-[data-md-color-scheme="radiant-dark"] img[src$="#only-light"] {
-	display: none !important;
+h1 {
+	text-transform: uppercase;
+	/*font-family: var(--radiant-font-header);*/
+	font-size: 5rem;
 }
 
-[data-md-color-scheme="radiant-light"] img[src$="#only-light"],
-[data-md-color-scheme="radiant-dark"] img[src$="#only-dark"] {
-	display: initial;
+h1::before {
+	content: "// ";
 }
