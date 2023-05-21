@@ -1,0 +1,102 @@
+/* Fonts */
+@font-face {
+    font-family: "tungsten";
+    src: url("../../../assets/fonts/tungsten.ttf") format("truetype");
+}
+
+@font-face {
+	font-family: "din-next";
+	src: url("../../../assets/fonts/din-next-w1g-regular.ttf") format("truetype");
+}
+
+@font-face {
+	font-family: "valorant";
+	src: url("../../../assets/fonts/valorant.ttf") format("truetype");
+}
+
+
+:root {
+	/* Valorant */
+    --val-navy: 210, 40%, 10%;
+    --val-red: 355, 100%, 64%;
+    --val-red-dark: 350, 45%, 31%;
+    
+    --val-gray-0: 0, 0%, 7%; /* dark gray surfaces */
+    --val-gray-1: 0, 0%, 16%; /* gray surfaces + dark gray surface accents */
+    --val-gray-2: 140, 5%, 23%; /* controls */
+    --val-gray-3: 0, 0%, 49%; /* low importance text on dark bg */
+    --val-gray-4: 40, 11%, 84%; /* light accents */
+    --val-gray-5: 38, 22%, 90%; /* light surfaces */
+    --val-gray-6: 0, 0%, 98%; /* text */
+    
+    --val-font-header: "tungsten", arial, georgia, sans-serif;
+	--val-font-text: "din-next", arial, georgia, sans-serif;
+
+	/* Radiant */
+	--radiant-font-header: var(--val-font-header);
+	--radiant-font-text: var(--val-font-text);
+}
+
+[data-md-color-scheme="radiant-light"] {
+    --radiant-bg-1a: var(--val-gray-5);
+	--radiant-bg-2a: var(--val-gray-4);
+	--radiant-bg-3a: var(--val-gray-6);
+	
+    --radiant-bg-1b: var(--val-gray-5);
+	--radiant-bg-2b: var(--val-gray-6);
+	--radiant-bg-3b: var(--val-gray-6);
+
+	--radiant-fg-1: var(--val-gray-1);
+	--radiant-fg-2: var(--val-gray-2);
+	--radiant-fg-3: var(--val-gray-3);
+
+	--radiant-accent: var(--val-red);
+	--radiant-accent-light: var(--val-red);
+	--radiant-accent-dark: var(--val-red-dark);
+	--radiant-accent-text: var(--val-red);
+
+	--radiant-accent-hover: var(--val-red-dark);
+	--radiant-accent-hover-text: var(--val-red);
+
+	--radiant-stroke: 240, 5%, 0%, 15%;
+	--radiant-smoke: 240, 5%, 85%, 90%;
+}
+
+[data-md-color-scheme="radiant-dark"] {
+    --radiant-bg-1a: var(--val-gray-0);
+	--radiant-bg-2a: var(--val-gray-1);
+	--radiant-bg-3a: var(--val-gray-2);
+
+	--radiant-bg-1b: var(--val-navy);
+	--radiant-bg-2b: var(--val-gray-0);
+	--radiant-bg-3b: var(--val-gray-1);
+
+	--radiant-fg-1: var(--val-gray-6);
+	--radiant-fg-2: var(--val-gray-5);
+	--radiant-fg-3: var(--val-gray-4);
+
+	--radiant-accent: var(--val-red);
+	--radiant-accent-light: var(--val-red);
+	--radiant-accent-dark: var(--val-red-dark);
+	--radiant-accent-text: var(--val-red);
+
+	--radiant-accent-hover: var(--val-red-dark);
+	--radiant-accent-hover-text: var(--val-red);
+
+	--radiant-stroke: var(--val-navy);
+	--radiant-smoke: 240, 5%, 0%, 90%;
+}
+
+
+/* Clever mechanism for hiding elements */
+[data-md-color-scheme="radiant-light"] .dark-theme-only,
+[data-md-color-scheme="radiant-dark"] .light-theme-only,
+[data-md-color-scheme="radiant-light"] img[src$="#only-dark"],
+[data-md-color-scheme="radiant-dark"] img[src$="#only-light"] {
+	display: none !important;
+}
+
+[data-md-color-scheme="radiant-light"] img[src$="#only-light"],
+[data-md-color-scheme="radiant-dark"] img[src$="#only-dark"] {
+	display: initial;
+}
